@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mars Rover GUI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+  <header>Mars Rover GUI</header>
+  <div class="main-container">
+    <!-- Video feed container -->
+    <div class="video-container">
+      <img src="{{ url_for('video_feed') }}" alt="Live Feed">
+    </div>
+    <!-- Right-hand container with two placeholders -->
+    <div class="info-container">
+      <div class="info-box">
+        <h2>Status</h2>
+        <p>Placeholder text for status updates...</p>
+      </div>
+      <div class="info-box">
+        <h2>QR code feed</h2>
+        <p>Placeholder text for QR code feed...</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Picamera Feed</title>
+</head>
+
+</html>

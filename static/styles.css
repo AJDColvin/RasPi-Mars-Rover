@@ -1,0 +1,79 @@
+/* General styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #333; /* Dark grey background */
+  color: #fff;
+}
+
+/* Header title styles */
+header {
+  text-align: center;
+  padding: 20px;
+  font-size: 2em;
+  color: orange;
+}
+
+/* Main container for the layout */
+.main-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Video container styles */
+.video-container {
+  flex: 1 1 300px; /* Flexible with a minimum width */
+  margin: 10px;
+  border: 5px solid orange; /* Orange border */
+}
+
+/* Make the video responsive */
+.video-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Container for the two right-hand placeholders */
+.info-container {
+  display: flex;
+  flex: 1 1 300px; /* Flexible with a minimum width */
+  flex-wrap: wrap;
+  margin: 10px;
+}
+
+/* Each info box (column) style */
+.info-box {
+  flex: 1 1 45%; /* Two equal columns with some margin */
+  background-color: #444;
+  margin: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Title styling within each info box */
+.info-box h2 {
+  margin-top: 0;
+  color: orange;
+  border-bottom: 2px solid orange;
+  padding-bottom: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .info-container {
+    flex-direction: column;
+  }
+  
+  .info-box {
+    flex: 1 1 100%;
+    margin: 10px 0;
+  }
+}
