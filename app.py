@@ -1,4 +1,4 @@
-from flask import Flask, Response, render_template, url_for
+from flask import Flask, Response, render_template, request, url_for
 from picamera2 import Picamera2
 import cv2
 
@@ -24,6 +24,17 @@ def index():
 @app.route('/video_feed')
 def video_feed():
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+# Endpoint to handle key control input
+@app.route('/key_control', methods=['POST'])
+def key_control():
+    data = request.get_json()
+    key = data.get('key')
+    # Here you can add your code to send commands to your Raspberry Pi based on the key
+    print(f"Received key: {key}")
+    # For example, you might call a function that controls motors
+    return {'status': 'success', 'key': key}
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
