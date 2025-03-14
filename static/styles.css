@@ -61,6 +61,41 @@ header {
   padding-bottom: 10px;
 }
 
+/* Arrow key display styles */
+.arrow-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.arrow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 50px);
+  grid-template-rows: repeat(3, 50px);
+  gap: 10px;
+  justify-items: center;
+  align-items: center;
+}
+
+/* Style only the cells that represent arrow keys */
+.arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  background-color: #555;
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+  transition: opacity 0.1s ease;
+  cursor: default;
+}
+
+.arrow.active {
+  opacity: 0.5;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .main-container {
