@@ -36,3 +36,13 @@ document.addEventListener('keyup', function(e) {
     }
   }
 });
+
+if (typeof(EventSource) !== "undefined") {
+  const source = new EventSource('/QR_data');
+  source.onmessage = function(event) {
+    console.log(event.data);
+    document.getElementById("qr-data").textContent = event.data;
+  };
+} else {
+  console.error("Your browser doesn't support SSE.");
+}
