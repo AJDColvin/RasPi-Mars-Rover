@@ -1,6 +1,14 @@
 document.addEventListener('keydown', function(e) {
   const allowedKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
   if (allowedKeys.includes(e.key)) {
+
+    if (isControllerActive === true){
+      console.log("Switching to Arrows")
+      isControllerActive = false;
+      document.getElementById("controller").style.display="none";
+      document.getElementById("arrow-grid").style.display="grid";
+    }
+
     fetch('/key_control', {
       method: 'POST',
       headers: {
@@ -37,11 +45,23 @@ document.addEventListener('keyup', function(e) {
   }
 });
 
+
+
+// Listen for QR code updates via SSE and add them to the list
 if (typeof(EventSource) !== "undefined") {
-  const source = new EventSource('/QR_data');
+  const source = new EventSource('/qr_feed');
   source.onmessage = function(event) {
-    console.log(event.data);
-    document.getElementById("qr-data").textContent = event.data;
+    const qrList = document.getElementById("qr-list");
+    // Remove placeholder if it exists
+    const placeholder = document.getElementById("qr-placeholder");
+    if (placeholder) {
+      placeholder.remove();
+    }
+    // Create a new list item for the new QR code data
+    const newItem = document.createElement("li");
+    newItem.textContent = event.data;
+    // Insert the new item at the top of the list
+    qrList.insertBefore(newItem, qrList.firstChild);
   };
 } else {
   console.error("Your browser doesn't support SSE.");

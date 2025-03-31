@@ -62,7 +62,7 @@ header {
 }
 
 /* Arrow key display styles */
-.arrow-container {
+.controller-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,9 +73,10 @@ header {
   display: grid;
   grid-template-columns: repeat(3, 50px);
   grid-template-rows: repeat(3, 50px);
-  gap: 10px;
+  gap: 10 px;
   justify-items: center;
   align-items: center;
+  margin: 20px;
 }
 
 /* Style only the cells that represent arrow keys */
@@ -83,7 +84,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2em;
+  font-size: 1.8em;
   background-color: #555;
   border-radius: 5px;
   width: 50px;
@@ -94,6 +95,36 @@ header {
 
 .arrow.active {
   opacity: 0.5;
+}
+
+/* Style for the QR code feed list */
+#qr-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#qr-list li {
+  padding: 5px;
+  border-bottom: 1px solid #666;
+  word-break: break-all;
+}
+
+.controller {
+  text-align: center;
+  display: none;
+}
+
+/* controller */
+
+.selected-button {
+  fill: rgb(265, 165, 0);
+  
+}
+
+.controller-svg {
+  fill: rgb(68, 68, 68);
+  stroke: rgb(68, 68, 68);
 }
 
 /* Responsive adjustments */
