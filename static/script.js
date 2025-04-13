@@ -49,6 +49,7 @@ document.addEventListener('keyup', function(e) {
 
 // Listen for QR code updates via SSE and add them to the list
 if (typeof(EventSource) !== "undefined") {
+  //SSE request from client to server
   const source = new EventSource('/qr_feed');
   source.onmessage = function(event) {
     const qrList = document.getElementById("qr-list");

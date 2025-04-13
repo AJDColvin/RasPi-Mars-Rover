@@ -12,7 +12,9 @@
 
     <!-- Video feed container -->
     <div class="video-container">
-      <img src="{{ url_for('video_feed') }}" alt="Live Feed">
+      <!-- Uncomment below to use MJPEG stream.  -->
+
+      <iframe src="http://192.168.1.211:8889/mystream" width="640" height="480"></iframe>
     </div>
 
     <!-- Right-hand container with two placeholders -->
