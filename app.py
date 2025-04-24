@@ -1,5 +1,5 @@
 from flask import Flask, Response, render_template, request, url_for
-from picamera2 import Picamera2
+# from picamera2 import Picamera2
 import cv2
 import time
 import threading
@@ -8,17 +8,19 @@ qr_codes = []
 
 app = Flask(__name__)
 
-# Configure camera
-camera = Picamera2()
-camera.configure(camera.create_preview_configuration(raw={"size":(1640,1232)}, main={"format": 'RGB888', "size": (640, 480)}))
-camera.start()
+##### Configure camera (Picamera): #####
+# camera = Picamera2()
+# camera.configure(camera.create_preview_configuration(raw={"size":(1640,1232)}, main={"format": 'RGB888', "size": (640, 480)}))
+# camera.start()
+
+###### Configure camera(USB): ######
+camera = cv2.VideoCapture(0)
 
 # Initialize QR code detector
 detector = cv2.QRCodeDetector()
 
 # MediaMTX streaming function
-def generate_frames_mtx(fps=15, width=640, height=480):
-    print("IM RUNNING NOW")
+def generate_frames_mtx(fps=15, width=640, height=480, ip_add='127.0.0.1'):
     
     global qr_codes
 
@@ -27,16 +29,19 @@ def generate_frames_mtx(fps=15, width=640, height=480):
         ' ! video/x-raw,format=I420' + \
         ' ! x264enc speed-preset=ultrafast bitrate=600 key-int-max=' + str(fps * 2) + \
         ' ! video/x-h264,profile=baseline' + \
-        ' ! rtspclientsink location=rtsp://192.168.1.211:8554/mystream',
+        ' ! rtspclientsink location=rtsp://' + ip_add + ':8554/mystream',
         cv2.CAP_GSTREAMER, 0, fps, (width, height), True)
     if not out.isOpened():
         raise Exception("can't open video writer")
 
     #Capture frame and look for QRs
     while True:
-        frame = camera.capture_array()
+        ### For picamera module: ###
+        # frame = camera.capture_array()
+        ### For USB camera: ###
+        _, frame = camera.read()
 
-        # Apply your OpenCV processing here
+        # OpenCV QR code processing
         data, bbox, _ = detector.detectAndDecode(frame)
 
         if len(data)>0 and bbox is not None and len(bbox)>0:
