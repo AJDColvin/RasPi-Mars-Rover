@@ -1,5 +1,7 @@
 /* General styles */
 body {
+  height: 100%;
+  overflow: hidden;
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #333; /* Dark grey background */
@@ -16,39 +18,50 @@ header {
 
 /* Main container for the layout */
 .main-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  height: 100vh;            /* full viewport */
+  gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 /* Video container styles */
 .video-container {
-  flex: 1 1 300px; /* Flexible with a minimum width */
-  margin: 10px;
-  border: 5px solid orange; /* Orange border */
-}
-
-/* Make the video responsive */
-.video-container img {
+  grid-column: 1 / 2;       /* first column */
+  grid-row: 1 / 2;          /* first row */
+  position: relative;
+  border: 5px solid orange;
   width: 100%;
-  height: auto;
-  display: block;
+  aspect-ratio: 4/3;
+  padding: 0;               /* remove the old padding-top */
 }
 
-/* Container for the two right-hand placeholders */
+
+.iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+
+/* 4) Status box in column 2, QR box in column 3 */
 .info-container {
   display: flex;
-  flex: 1 1 300px; /* Flexible with a minimum width */
-  flex-wrap: wrap;
-  margin: 10px;
+  flex-direction: row;
+  grid-row: 1 / 2;          /* stay on top row */
+  grid-column: 2 / 4;      /* span columns 2 and 3 */
+  align-items: stretch;
+  gap: 10px;
 }
 
-/* Each info box (column) style */
 .info-box {
-  flex: 1 1 45%; /* Two equal columns with some margin */
+  flex: 1;                  /* split .info-container equally */
   background-color: #444;
-  margin: 10px;
+  margin: 0;            /* small vertical gutters */
   padding: 20px;
   box-sizing: border-box;
 }
@@ -61,12 +74,16 @@ header {
   padding-bottom: 10px;
 }
 
-/* Arrow key display styles */
+/* 5) Arrow keys container sits below, full width */
 .controller-container {
+  grid-column: 1 / 4;       /* span all three columns */
+  grid-row: 2 / 3;          /* second row */
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px 0;
+  padding: 10px 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .arrow-grid {
@@ -128,7 +145,7 @@ header {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .main-container {
     flex-direction: column;
     align-items: center;
@@ -142,4 +159,4 @@ header {
     flex: 1 1 100%;
     margin: 10px 0;
   }
-}
+} */

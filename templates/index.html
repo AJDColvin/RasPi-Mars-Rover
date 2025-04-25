@@ -14,7 +14,7 @@
     <div class="video-container">
       <!-- Uncomment below to use MJPEG stream.  -->
 
-      <iframe src="http://127.0.0.1:8889/mystream" width="640" height="480"></iframe>
+      <iframe class="iframe" src="http://172.26.97.173:8889/mystream" height="480" width="640"></iframe>
     </div>
 
     <!-- Right-hand container with two placeholders -->
@@ -33,7 +33,7 @@
       </div>
 
     </div>
-  </div>
+  
     
   <!-- Arrow key display container -->
   <div class="controller-container">
@@ -342,6 +342,8 @@
       <div class="arrow" id="arrow-down">&#8595;</div>
       <div></div>
     </div>
+
+  </div>
   </div>
 
   <script src="{{ url_for('static', filename='script.js') }}"></script>
