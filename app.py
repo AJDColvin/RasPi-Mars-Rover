@@ -3,6 +3,7 @@ from flask import Flask, Response, render_template, request, url_for
 import cv2
 import time
 import threading
+import socket
 
 qr_codes = []
 
@@ -42,7 +43,10 @@ def generate_frames_mtx(fps=15, width=640, height=480, ip_add='127.0.0.1'):
         _, frame = camera.read()
 
         # OpenCV QR code processing
-        data, bbox, _ = detector.detectAndDecode(frame)
+        try:
+            data, bbox, _ = detector.detectAndDecode(frame)
+        except:
+            print("An error occurred while decoding")
 
         if len(data)>0 and bbox is not None and len(bbox)>0:
             bbox = bbox.astype(int)
@@ -60,42 +64,12 @@ def generate_frames_mtx(fps=15, width=640, height=480, ip_add='127.0.0.1'):
         out.write(frame)
 
 
-# MJPEG streaming function (old)
-def generate_frames():
-    global qr_codes
-    while True:
-        frame = camera.capture_array()
-        
-        ###### QR Code Decoding #######
-        data, bbox, _ = detector.detectAndDecode(frame)
-
-        if len(data)>0 and bbox is not None and len(bbox)>0:
-            
-            bbox = bbox.astype(int)
-            print(data)
-
-            for i in range(len(bbox[0])):
-                cv2.line(frame, tuple(bbox[0][i]), tuple(bbox[0][(i+1) % 4]), (255, 0, 0), 2)
-
-            # Add new QR code data only if it's different from the last scanned
-            if data and (len(qr_codes) == 0 or data != qr_codes[-1]):
-                qr_codes.append(data)
-                print("QR Code Found:", data)
-        ###############################
-        
-        ret, buffer = cv2.imencode('.jpg', frame)
-        frame = buffer.tobytes()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
 @app.route('/')
 def index():
-    return render_template('index.html')
+    ip = [l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], \
+        [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
 
-# Enpoint for streaming MJPEG frames. Uncomment to use. 
-# @app.route('/video_feed')
-# def video_feed():
-#     return Response(generate_frames(), headers={"Cache-Control": "no-cache"}, mimetype='multipart/x-mixed-replace; boundary=frame')
+    return render_template('index.html', ip=ip)
 
 
 # SSE endpoint to stream new QR code events
