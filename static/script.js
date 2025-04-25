@@ -67,3 +67,10 @@ if (typeof(EventSource) !== "undefined") {
 } else {
   console.error("Your browser doesn't support SSE.");
 }
+
+// Load controller SVG
+fetch('controller.svg')
+.then(response => response.text())
+.then(svg => {
+  document.getElementById('controller-svg-container').innerHTML = svg;
+});
