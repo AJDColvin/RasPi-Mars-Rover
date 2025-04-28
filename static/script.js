@@ -1,4 +1,10 @@
 document.addEventListener('keydown', function(e) {
+
+  if (e.key === 'a' || e.key === 'A') {
+    automate.checked = !automate.checked; // Toggle the checkbox
+    automate.dispatchEvent(new Event('change')); // Trigger 'change' event manually
+  }
+
   const allowedKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
   if (allowedKeys.includes(e.key)) {
 
