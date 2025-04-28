@@ -106,7 +106,15 @@ def controller_control():
 
     print(f"Received R2 buttons: {R2buttons}")
 
-    return{}
+    return {}
+
+# Endpoint to handle automate toggle
+@app.route('/automate_toggle', methods=['POST'] )
+def automate_toggle():
+    data = request.get_json()
+    automate = data.get('automate')
+    print(automate)
+    return {}
 
 # Or comment out below and use:
 # gunicorn -k gevent -w 1 app:app

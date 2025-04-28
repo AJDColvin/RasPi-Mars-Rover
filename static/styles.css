@@ -79,21 +79,22 @@ header {
   grid-column: 1 / 4;       /* span all three columns */
   grid-row: 2 / 3;          /* second row */
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   padding: 10px 0;
   box-sizing: border-box;
   overflow: hidden;
+  /* position: relative; */
 }
 
 .arrow-grid {
   display: grid;
   grid-template-columns: repeat(3, 50px);
   grid-template-rows: repeat(3, 50px);
-  gap: 10 px;
+  gap: 0px;
   justify-items: center;
   align-items: center;
-  margin: 20px;
+  margin: 0 auto;
 }
 
 /* Style only the cells that represent arrow keys */
@@ -130,12 +131,13 @@ header {
 .controller {
   text-align: center;
   display: none;
+  margin: 0 auto;
 }
 
 /* controller */
 
 .selected-button {
-  fill: rgb(265, 165, 0);
+  fill: rgb(255, 165, 0);
   
 }
 
@@ -144,3 +146,64 @@ header {
   stroke: rgb(68, 68, 68);
 }
 
+/* Slider checkbox */
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  left: 7.5%;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+/* The circle inside the slider */
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* When the checkbox is checked */
+input:checked + .slider {
+  background-color: rgb(255, 165, 0);
+}
+
+/* Move the circle to the right when checked */
+input:checked + .slider::before {
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round::before {
+  border-radius: 50%;
+}

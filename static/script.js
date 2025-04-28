@@ -45,7 +45,24 @@ document.addEventListener('keyup', function(e) {
   }
 });
 
-
+// Send True or False for automating rover
+const automate = document.getElementById('automate_toggle');
+automate.addEventListener('change', function() {
+  fetch('/automate_toggle', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ automate: this.checked })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Key sent successfully:', data);
+  })
+  .catch(error => {
+    console.error('Error sending key:', error);
+  });
+});
 
 // Listen for QR code updates via SSE and add them to the list
 if (typeof(EventSource) !== "undefined") {
