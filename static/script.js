@@ -69,7 +69,7 @@ if (typeof(EventSource) !== "undefined") {
 }
 
 // Load controller SVG
-fetch('controller.svg')
+fetch('/static/controller.svg')
 .then(response => response.text())
 .then(svg => {
   document.getElementById('controller-svg-container').innerHTML = svg;
