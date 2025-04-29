@@ -6,6 +6,7 @@ import threading
 import socket
 
 qr_codes = []
+scanQRevent = threading.Event()
 
 app = Flask(__name__)
 
@@ -42,23 +43,24 @@ def generate_frames_mtx(fps=15, width=640, height=480, ip_add='127.0.0.1'):
         ### For USB camera: ###
         _, frame = camera.read()
 
-        # OpenCV QR code processing
-        try:
-            data, bbox, _ = detector.detectAndDecode(frame)
-        except:
-            print("An error occurred while decoding")
+        if scanQRevent.is_set():
+            # OpenCV QR code processing
+            try:
+                data, bbox, _ = detector.detectAndDecode(frame)
+            except:
+                print("An error occurred while decoding")
 
-        if len(data)>0 and bbox is not None and len(bbox)>0:
-            bbox = bbox.astype(int)
+            if len(data)>0 and bbox is not None and len(bbox)>0:
+                bbox = bbox.astype(int)
 
-            #Blue Box around QR code
-            for i in range(len(bbox[0])):
-                cv2.line(frame, tuple(bbox[0][i]), tuple(bbox[0][(i+1) % 4]), (255, 0, 0), 2)
+                #Blue Box around QR code
+                for i in range(len(bbox[0])):
+                    cv2.line(frame, tuple(bbox[0][i]), tuple(bbox[0][(i+1) % 4]), (255, 0, 0), 2)
 
-        # Add new QR code data only if it's different from the last scanned
-        if data and (len(qr_codes) == 0 or data != qr_codes[-1]):
-            qr_codes.append(data)
-            print("QR Code Found:", data)
+            # Add new QR code data only if it's different from the last scanned
+            if data and (len(qr_codes) == 0 or data != qr_codes[-1]):
+                qr_codes.append(data)
+                print("QR Code Found:", data)
 
 
         out.write(frame)
@@ -113,7 +115,20 @@ def controller_control():
 def automate_toggle():
     data = request.get_json()
     automate = data.get('automate')
-    print(automate)
+    print('Automate: ' + str(automate))
+    return {}
+
+# Endpoint to handle automate toggle
+@app.route('/QR_toggle', methods=['POST'] )
+def QR_toggle():
+    data = request.get_json()
+    scanQR = data.get('scanQR')
+    if scanQR:
+        scanQRevent.set()
+    else:
+        scanQRevent.clear()
+        
+    print('scanQR: ' + str(scanQR))
     return {}
 
 # Or comment out below and use:

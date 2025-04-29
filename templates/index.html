@@ -13,6 +13,10 @@
     <!-- Video feed container -->
     <div class="video-container">
       <!-- Uncomment below to use MJPEG stream.  -->
+      <label class="switch-QR">
+        <input type="checkbox" id="QR_toggle">
+        <span class="sliderQR round"></span>
+      </label> 
 
       <iframe class="iframe" src="http://{{ ip }}:8889/mystream" height="480" width="640"></iframe>
     </div>

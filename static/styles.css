@@ -146,7 +146,7 @@ header {
   stroke: rgb(68, 68, 68);
 }
 
-/* Slider checkbox */
+/* Automate Slider checkbox */
 .switch-container {
   position: relative;
   left: 7.5%;
@@ -167,6 +167,7 @@ header {
   width: 100px;
   height: 34px;
   margin-bottom: 20px;
+  z-index: 10;
 }
 
 /* Hide default HTML checkbox */
@@ -218,5 +219,70 @@ input:checked + .slider::before {
 }
 
 .slider.round::before {
+  border-radius: 50%;
+}
+
+
+/* QR Slider Checkbox */
+
+/* The switch - the box around the slider */
+.switch-QR {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 34px;
+  margin-bottom: 20px;
+  z-index: 10;
+}
+
+/* Hide default HTML checkbox */
+.switch-QR input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.sliderQR {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+/* The circle inside the slider */
+.sliderQR::before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* When the checkbox is checked */
+input:checked + .sliderQR {
+  background-color: rgb(255, 165, 0);
+}
+
+/* Move the circle to the right when checked */
+input:checked + .sliderQR::before {
+  transform: translateX(66px);
+}
+
+/* Rounded sliders */
+.sliderQR.round {
+  border-radius: 34px;
+}
+
+.sliderQR.round::before {
   border-radius: 50%;
 }

@@ -70,6 +70,27 @@ automate.addEventListener('change', function() {
   });
 });
 
+// Send True or False for scanning QR code in feed
+const scanQR = document.getElementById('QR_toggle');
+scanQR.addEventListener('change', function() {
+  fetch('/QR_toggle', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ scanQR: this.checked })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Key sent successfully:', data);
+  })
+  .catch(error => {
+    console.error('Error sending key:', error);
+  });
+});
+
+
+
 // Listen for QR code updates via SSE and add them to the list
 if (typeof(EventSource) !== "undefined") {
   //SSE request from client to server
