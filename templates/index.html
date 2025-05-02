@@ -18,7 +18,7 @@
         <span class="sliderQR round"></span>
       </label> 
 
-      <iframe class="iframe" src="http://{{ ip }}:8889/mystream" height="480" width="640"></iframe>
+      <iframe id="iframe" class="iframe" src="http://{{ ip }}:8889/LowLat" height="480" width="640"></iframe>
     </div>
 
     <!-- Right-hand container with two placeholders -->
@@ -74,6 +74,7 @@
   </div>
   </div>
 
+  <script> const raspi_ip = "{{ ip }}"</script>
   <script src="{{ url_for('static', filename='script.js') }}"></script>
   <script src="{{ url_for ('static', filename='controller_script.js') }}" defer></script>
 </body>

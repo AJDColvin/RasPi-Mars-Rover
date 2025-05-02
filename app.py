@@ -4,6 +4,7 @@ import cv2
 import time
 import threading
 import socket
+import subprocess
 
 qr_codes = []
 scanQRevent = threading.Event()
@@ -26,12 +27,38 @@ def generate_frames_mtx(fps=15, width=640, height=480, ip_add='127.0.0.1'):
     
     global qr_codes
 
+    #Low latency FFmpeg command
+    cmd = [
+        "ffmpeg",
+        "-fflags", "nobuffer", "-flags", "low_delay",
+        "-probesize", "32", "-analyzeduration", "0",
+        "-thread_queue_size", "512",
+        "-f", "v4l2",
+        "-input_format", "yuyv422",
+        "-video_size", f"{width}x{height}",
+        "-framerate", str(fps),
+        "-i", "/dev/video2",
+        "-an",
+        "-c:v", "libx264",
+        "-preset", "ultrafast",
+        "-tune", "zerolatency",
+        "-profile:v", "baseline",
+        "-pix_fmt", "yuv420p",
+        "-b:v", "2000k",
+        "-g", str(fps),
+        "-f", "rtsp",
+        "rtsp://" + ip_add + ":8554/LowLat"
+    ]
+    
+    #Run cmd in command line 
+    subprocess.Popen(cmd,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL, start_new_session=True)
+
     # Define the GStreamer pipeline
     out = cv2.VideoWriter('appsrc ! videoconvert' + \
         ' ! video/x-raw,format=I420' + \
         ' ! x264enc speed-preset=ultrafast bitrate=600 key-int-max=' + str(fps * 2) + \
         ' ! video/x-h264,profile=baseline' + \
-        ' ! rtspclientsink location=rtsp://' + ip_add + ':8554/mystream',
+        ' ! rtspclientsink location=rtsp://' + ip_add + ':8554/QRDecode',
         cv2.CAP_GSTREAMER, 0, fps, (width, height), True)
     if not out.isOpened():
         raise Exception("can't open video writer")
@@ -70,8 +97,14 @@ def generate_frames_mtx(fps=15, width=640, height=480, ip_add='127.0.0.1'):
 def index():
     ip = [l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], \
         [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
+    path = ''
+    if scanQRevent.is_set():
+        print("Right syntax")
+        path = 'QRDecode'
+    else:
+        path = 'LowLat'
 
-    return render_template('index.html', ip=ip)
+    return render_template('index.html', ip=ip, path=path)
 
 
 # SSE endpoint to stream new QR code events

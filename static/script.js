@@ -1,3 +1,4 @@
+
 document.addEventListener('keydown', function(e) {
 
   if (e.key === 'a' || e.key === 'A') {
@@ -73,20 +74,16 @@ automate.addEventListener('change', function() {
 // Send True or False for scanning QR code in feed
 const scanQR = document.getElementById('QR_toggle');
 scanQR.addEventListener('change', function() {
-  fetch('/QR_toggle', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ scanQR: this.checked })
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Key sent successfully:', data);
-  })
-  .catch(error => {
-    console.error('Error sending key:', error);
-  });
+
+  //Change stream
+  if (this.checked){
+    document.getElementById('iframe').src = "http://" + raspi_ip + ":8889/QRDecode"
+    console.log("http://" + raspi_ip + ":8889/QRDecode")
+  }
+  else {
+    document.getElementById('iframe').src = "http://" + raspi_ip + ":8889/LowLat"
+    console.log("http://" + raspi_ip + ":8889/LowLat")
+  }
 });
 
 
