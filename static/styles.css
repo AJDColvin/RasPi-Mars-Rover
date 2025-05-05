@@ -229,10 +229,12 @@ input:checked + .slider::before {
 .switch-QR {
   position: relative;
   display: inline-block;
-  width: 100px;
-  height: 34px;
+  width: 88px;
+  height: 40px;
   margin-bottom: 20px;
   z-index: 10;
+  top: 10px;
+  left: 10px;
 }
 
 /* Hide default HTML checkbox */
@@ -252,37 +254,35 @@ input:checked + .slider::before {
   bottom: 0;
   background-color: #ccc;
   transition: 0.4s;
-  border-radius: 34px;
+  border-radius: 15px;
+  filter: opacity(0.75);
 }
 
 /* The circle inside the slider */
 .sliderQR::before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
+  height: 32px;
+  width: 32px;
   left: 4px;
   bottom: 4px;
   background-color: white;
   transition: 0.4s;
-  border-radius: 50%;
+  border-radius: 25%;
+  background-image: url('qr-code.svg');
+  background-size: 100%;
+  background-position: center ;
+  filter:opacity(0.3);
 }
 
 /* When the checkbox is checked */
 input:checked + .sliderQR {
   background-color: rgb(255, 165, 0);
+
 }
 
 /* Move the circle to the right when checked */
 input:checked + .sliderQR::before {
-  transform: translateX(66px);
-}
-
-/* Rounded sliders */
-.sliderQR.round {
-  border-radius: 34px;
-}
-
-.sliderQR.round::before {
-  border-radius: 50%;
+  transform: translateX(48px);
+  filter: none;
 }

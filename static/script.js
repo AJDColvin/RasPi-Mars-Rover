@@ -6,6 +6,11 @@ document.addEventListener('keydown', function(e) {
     automate.dispatchEvent(new Event('change')); // Trigger 'change' event manually
   }
 
+  if (e.key === 'q' || e.key === 'Q') {
+    scanQR.checked = !scanQR.checked; // Toggle the checkbox
+    scanQR.dispatchEvent(new Event('change')); // Trigger 'change' event manually
+  }
+
   const allowedKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
   if (allowedKeys.includes(e.key)) {
 
@@ -71,7 +76,7 @@ automate.addEventListener('change', function() {
   });
 });
 
-// Send True or False for scanning QR code in feed
+//True or False for scanning QR code in feed
 const scanQR = document.getElementById('QR_toggle');
 scanQR.addEventListener('change', function() {
 
