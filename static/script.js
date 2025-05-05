@@ -82,13 +82,21 @@ scanQR.addEventListener('change', function() {
 
   //Change stream
   if (this.checked){
-    document.getElementById('iframe').src = "http://" + raspi_ip + ":8889/QRDecode"
-    console.log("http://" + raspi_ip + ":8889/QRDecode")
+    // document.getElementById('iframe').src = "http://" + raspi_ip + ":8889/QRDecode"
+    // console.log("http://" + raspi_ip + ":8889/QRDecode")
+    document.getElementById('iframe').classList.toggle('hidden');
+    document.getElementById('iframe2').classList.toggle('hidden');
+
+
   }
   else {
-    document.getElementById('iframe').src = "http://" + raspi_ip + ":8889/LowLat"
-    console.log("http://" + raspi_ip + ":8889/LowLat")
+    // document.getElementById('iframe').src = "http://" + raspi_ip + ":8889/LowLat"
+    // console.log("http://" + raspi_ip + ":8889/LowLat")
+    document.getElementById('iframe').classList.toggle('hidden');
+    document.getElementById('iframe2').classList.toggle('hidden');
   }
+
+
 });
 
 
