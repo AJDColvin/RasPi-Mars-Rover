@@ -37,7 +37,7 @@ def generate_frames_mtx(fps=15, width=640, height=480, ip_add='127.0.0.1'):
         "-input_format", "yuyv422",
         "-video_size", f"{width}x{height}",
         "-framerate", str(fps),
-        "-i", "/dev/video4",
+        "-i", "/dev/video2",
         "-an",
         "-c:v", "libx264",
         "-preset", "ultrafast",
@@ -171,6 +171,7 @@ if __name__ == '__main__':
     threading.Thread(target=generate_frames_mtx, daemon=True).start()
 
     #Start Flask app
+    print("[WARN] REMEMBER TO RUN MEDIAMTX FIRST")
     app.run(host='0.0.0.0', port=5000)
     
     

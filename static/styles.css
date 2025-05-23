@@ -70,8 +70,13 @@ iframe {
   box-sizing: border-box;
 }
 
+.info-box p {
+  font-size: 30px;
+}
+
 /* Title styling within each info box */
 .info-box h2 {
+  font-size: 30px;
   margin-top: 0;
   color: orange;
   border-bottom: 2px solid orange;
