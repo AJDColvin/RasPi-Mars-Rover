@@ -1,15 +1,12 @@
 # Raspberry Pi Mars Rover GUI
-___
 
-This is a **web-based GUI for a Raspberry Pi Mars Rover** to be entered into the [UK-SEDS Olympus Rover Trials](https://ukseds.org/ignition/competitions/olympus-rover-trials/). 
+This is a **web-based GUI for a Raspberry Pi Mars Rover** to be entered into the [UK-SEDS Olympus Rover Trials](https://ukseds.org/ignition/competitions/olympus-rover-trials/). Its purpose is to control the Rover via WiFi from a remote base station, without direct line of sight. 
 
 
 
 ![Annotated screenshot of the GUI](images/Labelled_GUI.png)
 
 ## Features:
-
----
 
 
 - Displays 2 streams which can be toggled between:
@@ -22,7 +19,7 @@ This is a **web-based GUI for a Raspberry Pi Mars Rover** to be entered into the
 - Connects to the Raspberry Pi onboard the rover via WiFi, over a local network. 
 
 ## Prerequisites:
----
+
 ### Raspberry Pi Requirements
 - For this rover, a **Raspberry Pi 5 8GB** was used, with **Ubuntu 24.04**
 - The programme was also tested with a Raspberry Pi 3 - however, it would usually lock up within a couple minutes of running the programme.
@@ -49,7 +46,7 @@ To enable this, OpenCV must be recompiled with the Gstreamer plugin enabled. The
 (See: Publish to server -> By software -> OpenCV)
 
 ## Using the GUI:
----
+
 
 1. Connect to the RasPi via **SSH** (or use a HDMI cable and keyboard if accessible)
 
@@ -67,12 +64,12 @@ To enable this, OpenCV must be recompiled with the Gstreamer plugin enabled. The
 *http://<YOUR_PI_IP>:5000*
 
 ## Common Errors:
----
+
 - Ensure **2** USB cameras are plugged into the RasPi
 - Ensure the laptop running the GUI and RasPi are connected to the **same network**
 - In the code it is assumed the two USB cameras are found at **dev/video0** and **dev/video2**. Occasionally this won't be the case, and you will have to manually identify which /dev/video* node points to each USB camera.
 
 ## To Do:
----
+
 - The rover should become autonomous when the '*automate*' toggle is clicked
 - Actual code for outputting to the PWM pins / receiving from the I2C pins on the RasPi
